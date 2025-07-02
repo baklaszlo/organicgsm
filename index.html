@@ -72,6 +72,33 @@
       font-weight: bold;
       margin-top: 1em;
     }
+    #app {
+      display: none;
+      padding: 2em;
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      gap: 2em;
+    }
+    #product-list {
+      flex: 2;
+      background-color: #ffffff;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    #cart {
+      flex: 1;
+      background-color: #ffffff;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .product {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1em;
+    }
   </style>
   <script>
     function handleLogin(event) {
@@ -79,19 +106,63 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      // Egyszerű példa: fix email és jelszó
       const validEmail = "partner@organicgsm.hu";
       const validPassword = "titok123";
-
       const messageBox = document.getElementById("login-message");
 
       if (email === validEmail && password === validPassword) {
         messageBox.textContent = "Sikeres belépés! Üdvözöljük.";
         messageBox.style.color = "green";
+        document.querySelector('nav').style.display = 'none';
+        document.getElementById('belepes').style.display = 'none';
+        document.querySelector('.hero').style.display = 'none';
+        document.getElementById('app').style.display = 'flex';
+        loadProducts();
       } else {
         messageBox.textContent = "Hibás email vagy jelszó!";
         messageBox.style.color = "red";
       }
+    }
+
+    const products = [
+      { id: 1, name: "iPhone 13", price: 299000 },
+      { id: 2, name: "Samsung Galaxy S22", price: 249000 },
+      { id: 3, name: "Xiaomi Redmi Note 11", price: 79000 },
+    ];
+
+    const cart = [];
+
+    function loadProducts() {
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '<h2>Terméklista</h2>';
+      products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `${p.name} – ${p.price.toLocaleString()} Ft <button onclick="addToCart(${p.id})">Kosárba</button>`;
+        productList.appendChild(div);
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      cart.push(product);
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartDiv = document.getElementById('cart');
+      cartDiv.innerHTML = '<h2>Kosár</h2>';
+      if (cart.length === 0) {
+        cartDiv.innerHTML += '<p>A kosár üres.</p>';
+        return;
+      }
+      const list = document.createElement('ul');
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} – ${item.price.toLocaleString()} Ft`;
+        list.appendChild(li);
+      });
+      cartDiv.appendChild(list);
     }
   </script>
 </head>
@@ -115,8 +186,6 @@
     <p>Velünk nem csak terméket vásárol – egy stabil, hosszú távú partnert nyer</p>
   </section>
 
-  <!-- (tartalom szekciók változatlanok maradnak) -->
-
   <section id="belepes">
     <h2>Partneri belépés</h2>
     <form onsubmit="handleLogin(event)">
@@ -129,6 +198,11 @@
       <input type="submit" value="Belépés">
       <div id="login-message" class="message"></div>
     </form>
+  </section>
+
+  <section id="app">
+    <div id="product-list"></div>
+    <div id="cart"></div>
   </section>
 
   <footer>
