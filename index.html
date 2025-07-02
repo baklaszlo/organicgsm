@@ -161,6 +161,20 @@
       productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
       console.error('CSV betöltési hiba:', error);
     });
+};
+          products.push(product);
+
+          const div = document.createElement('div');
+          div.className = 'product';
+          div.innerHTML = `${product.name} – ${product.price.toLocaleString()} Ft <button onclick="addToCart(${product.id})">Kosárba</button>`;
+          productList.appendChild(div);
+        }
+      });
+    })
+    .catch(error => {
+      productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
+      console.error('CSV betöltési hiba:', error);
+    });
 } – ${p.price.toLocaleString()} Ft <button onclick="addToCart(${p.id})">Kosárba</button>`;
         productList.appendChild(div);
       });
