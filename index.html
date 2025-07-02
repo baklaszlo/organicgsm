@@ -202,7 +202,17 @@
   </section>
 
   <section id="belepes" style="display:none">
-$1
+  <h2>Partneri belépés</h2>
+  <form onsubmit="handleLogin(event)">
+    <label for="email">Email cím:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Jelszó:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="Belépés">
+    <div id="login-message" class="message"></div>
+  </form>
 </section>
 
   <section id="app">
