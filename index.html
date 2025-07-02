@@ -6,20 +6,20 @@
   <title>Organic GSM – Mobiltelefon Nagykereskedés</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fff8f3;
-      color: #333;
+      background-color: #f0f6ff;
+      color: #1a1a1a;
     }
     header, footer {
-      background-color: #d2691e;
+      background: linear-gradient(to right, #004e92, #000428);
       color: white;
-      padding: 1em;
+      padding: 1.5em;
       text-align: center;
     }
     nav {
-      background-color: #f4a460;
+      background-color: #006bb3;
       display: flex;
       justify-content: center;
       gap: 2em;
@@ -40,10 +40,32 @@
       color: white;
       padding: 5em 2em;
       text-align: center;
+      background-blend-mode: multiply;
+      background-color: rgba(0, 80, 150, 0.5);
     }
-    img {
-      max-width: 100%;
-      height: auto;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 400px;
+      margin: 2em auto;
+      background-color: #e6f2ff;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="email"], input[type="password"] {
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      background-color: #007acc;
+      color: white;
+      padding: 0.8em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -59,6 +81,7 @@
     <a href="#szallitas">Szállítás</a>
     <a href="#garancia">Garancia</a>
     <a href="#kapcsolat">Kapcsolat</a>
+    <a href="#belepes">Belépés</a>
   </nav>
 
   <section class="hero">
@@ -68,41 +91,54 @@
 
   <section id="rolunk">
     <h2>Rólunk</h2>
-    <p>Üdvözöljük Magyarország egyik meghatározó mobiltelefon nagykereskedelmi központjában. Többéves tapasztalatunkkal, rugalmas megoldásainkkal és szakértő kollégáinkkal támogatjuk partnereinket a versenyképes működésben.</p>
+    <p>ORGANIC GSM – A Mobiltelefon nagykereskedés – Megbízhatóság, választék, gyorsaság egy helyen!</p>
+    <p>Üdvözöljük Magyarország egyik meghatározó mobiltelefon nagykereskedelmi központjában, ahol a technológia, a szakértelem és az ügyfélközpontúság találkozik! Többéves tapasztalatunkkal, felkészült, szakértő kollégáinkkal és rugalmas megoldásainkkal segítjük partnereinket a versenyképes és gördülékeny működésben – legyen szó viszonteladókról, webshopokról vagy vállalati beszerzőkről.</p>
     <ul>
-      <li>Széles termékkínálat, gyors beszerzés</li>
+      <li>Széles termékkínálat – szinte minden típusban</li>
       <li>Gyors és megbízható szállítás</li>
-      <li>Teljeskörű garancia</li>
+      <li>Teljeskörű garancia, biztonságos vásárlás</li>
       <li>Ügyfélközpontú hozzáállás</li>
-      <li>Vállalatokra specializált kiszolgálás</li>
+      <li>Kifejezetten cégek kiszolgálására szakosodva</li>
     </ul>
+    <p>Velünk nem csak terméket vásárol – egy stabil, hosszú távú partnert nyer, aki támogatja vállalkozása fejlődését.</p>
   </section>
 
   <section id="vasarlas">
     <h2>Vásárlás</h2>
+    <p>A vásárlás menete – gyors, biztonságos és átlátható</p>
     <ol>
-      <li>Regisztráció céges adatokkal</li>
-      <li>Dokumentumok beküldése</li>
-      <li>Partnerszerződés aláírása</li>
-      <li>Partnerfiók aktiválása</li>
+      <li>Regisztráció emailen keresztül, céges adatokkal</li>
+      <li>Dokumentumok beküldése (cégkivonat, aláírási minta, adószám igazolás stb.)</li>
+      <li>Együttműködési szerződés aláírása</li>
+      <li>Partneri fiók aktiválása</li>
       <li>Egyedi árképzés, heti árlisták</li>
     </ol>
+    <p>Ügyfélszolgálatunk készséggel segít a folyamat minden lépésében – keressen bennünket bizalommal!</p>
   </section>
 
   <section id="szallitas">
     <h2>Szállítás</h2>
-    <p>Gyors és biztonságos kiszállítás partnerfuvarozóval 2–5 munkanapon belül. Személyes átvétel is lehetséges előre egyeztetett időpontban.</p>
-    <p>Különleges kérések esetén kérjük, vegye fel velünk a kapcsolatot.</p>
+    <p>Megrendeléseit megbízható logisztikai partnercégünk segítségével szállítjuk ki, de lehetőség van a személyes átvételre is telephelyünkön, előre egyeztetett időpontban.</p>
+    <ul>
+      <li>Kiszállítás 2–5 munkanapon belül</li>
+      <li>Saját fuvarozó partner</li>
+      <li>Szállítólevél minden csomag mellé</li>
+      <li>Külön igény esetén CMR és export dokumentáció</li>
+      <li>Személyes átvétel előzetes egyeztetéssel</li>
+    </ul>
+    <p>Tulajdonjog fenntartása: az áru a teljes vételár kiegyenlítéséig cégünk tulajdonát képezi.</p>
   </section>
 
   <section id="garancia">
     <h2>Garancia</h2>
+    <p>Garancia – Mert a bizalom alapja a megbízhatóság</p>
     <ul>
       <li>Díjmentes javítás vagy csere</li>
-      <li>Cserekészülék biztosítása szükség esetén</li>
+      <li>Cserekészülék igényelhető hosszabb javítás esetén</li>
       <li>Széles szervizhálózat</li>
-      <li>Iparági szabvány szerinti garanciális idő</li>
+      <li>Iparági szabványok szerinti garanciális időtartam</li>
     </ul>
+    <p>Probléma esetén kollégáink készséggel állnak rendelkezésére telefonon vagy e-mailben.</p>
   </section>
 
   <section id="kapcsolat">
@@ -112,9 +148,22 @@
     Adószám: 14938070-2-41 | Cégjegyzékszám: 01-09-965443</p>
     <p><strong>Telefon:</strong> +36 70 255 7258<br>
     <strong>Email:</strong><br>
-    Általános ügyintézés: info@organicgsm.hu<br>
+    Általános: info@organicgsm.hu<br>
     Szerviz: szerviz@organicgsm.hu<br>
     Szállítás: szallitas@organicgsm.hu</p>
+  </section>
+
+  <section id="belepes">
+    <h2>Partneri belépés</h2>
+    <form>
+      <label for="email">Email cím:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Jelszó:</label>
+      <input type="password" id="password" name="password" required>
+
+      <input type="submit" value="Belépés">
+    </form>
   </section>
 
   <footer>
