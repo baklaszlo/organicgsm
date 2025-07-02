@@ -43,143 +43,7 @@
       background-blend-mode: multiply;
       background-color: rgba(0, 80, 150, 0.5);
     }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-      max-width: 400px;
-      margin: 2em auto;
-      background-color: #e6f2ff;
-      padding: 2em;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input[type="email"], input[type="password"] {
-      padding: 0.8em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    input[type="submit"] {
-      background-color: #007acc;
-      color: white;
-      padding: 0.8em;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .message {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 1em;
-    }
-    #app {
-      display: none;
-      padding: 2em;
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      gap: 2em;
-    }
-    #product-list {
-      flex: 2;
-      background-color: #ffffff;
-      padding: 1em;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    #cart {
-      flex: 1;
-      background-color: #ffffff;
-      padding: 1em;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .product {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1em;
-    }
   </style>
-  <script>
-  function handleLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    const validEmail = "partner@organicgsm.hu";
-    const validPassword = "titok123";
-    const messageBox = document.getElementById("login-message");
-
-    if (email === validEmail && password === validPassword) {
-      messageBox.textContent = "Sikeres belépés! Üdvözöljük.";
-      messageBox.style.color = "green";
-      document.querySelector('nav').style.display = 'none';
-      document.getElementById('belepes').style.display = 'none';
-      document.querySelector('.hero').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-      loadProducts();
-    } else {
-      messageBox.textContent = "Hibás email vagy jelszó!";
-      messageBox.style.color = "red";
-    }
-  }
-
-  const products = [];
-  const cart = [];
-
-  function loadProducts() {
-    const productList = document.getElementById('product-list');
-    productList.innerHTML = '<h2>Terméklista</h2>';
-
-    fetch("https://api.yukatel.de/api/stock-list?vpnr=22668&authcode=22668-96a841bd-0562-11f0-a7a6-0050568c8f1a&ean=1&type=csv")
-      .then(response => response.text())
-      .then(csv => {
-        const lines = csv.split('
-').slice(1); // első sor: fejléc
-        lines.forEach((line, index) => {
-          const cols = line.split(';');
-          if (cols.length >= 4) {
-            const name = cols[1]?.trim();
-            const price = parseInt(cols[3]?.replace(/[^0-9]/g, '')) || 0;
-            const id = 1000 + index;
-            const product = { id, name, price };
-            products.push(product);
-
-            const div = document.createElement('div');
-            div.className = 'product';
-            div.innerHTML = `${product.name} – ${product.price.toLocaleString()} Ft <button onclick="addToCart(${product.id})">Kosárba</button>`;
-            productList.appendChild(div);
-          }
-        });
-      })
-      .catch(error => {
-        productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
-        console.error('CSV betöltési hiba:', error);
-      });
-  }
-
-  function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    cart.push(product);
-    updateCart();
-  }
-
-  function updateCart() {
-    const cartDiv = document.getElementById('cart');
-    cartDiv.innerHTML = '<h2>Kosár</h2>';
-    if (cart.length === 0) {
-      cartDiv.innerHTML += '<p>A kosár üres.</p>';
-      return;
-    }
-    const list = document.createElement('ul');
-    cart.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = `${item.name} – ${item.price.toLocaleString()} Ft`;
-      list.appendChild(li);
-    });
-    cartDiv.appendChild(list);
-  }
-</script>
 </head>
 <body>
   <header>
@@ -193,7 +57,6 @@
     <a href="#szallitas">Szállítás</a>
     <a href="#garancia">Garancia</a>
     <a href="#kapcsolat">Kapcsolat</a>
-    <a href="#" onclick="document.getElementById('belepes').style.display = 'block'; window.scrollTo({ top: document.getElementById('belepes').offsetTop, behavior: 'smooth' }); return false;">Belépés</a>
   </nav>
 
   <section class="hero">
@@ -201,23 +64,67 @@
     <p>Velünk nem csak terméket vásárol – egy stabil, hosszú távú partnert nyer</p>
   </section>
 
-  <section id="belepes" style="display:none">
-  <h2>Partneri belépés</h2>
-  <form onsubmit="handleLogin(event)">
-    <label for="email">Email cím:</label>
-    <input type="email" id="email" name="email" required>
+  <section id="rolunk">
+    <h2>Rólunk</h2>
+    <p>ORGANIC GSM – A Mobiltelefon nagykereskedés – Megbízhatóság, választék, gyorsaság egy helyen!</p>
+    <p>Üdvözöljük Magyarország egyik meghatározó mobiltelefon nagykereskedelmi központjában, ahol a technológia, a szakértelem és az ügyfélközpontúság találkozik! Többéves tapasztalatunkkal, felkészült, szakértő kollégáinkkal és rugalmas megoldásainkkal segítjük partnereinket a versenyképes és gördülékeny működésben – legyen szó viszonteladókról, webshopokról vagy vállalati beszerzőkről.</p>
+    <ul>
+      <li>Széles termékkínálat – szinte minden típusban</li>
+      <li>Gyors és megbízható szállítás</li>
+      <li>Teljeskörű garancia, biztonságos vásárlás</li>
+      <li>Ügyfélközpontú hozzáállás</li>
+      <li>Kifejezetten cégek kiszolgálására szakosodva</li>
+    </ul>
+    <p>Velünk nem csak terméket vásárol – egy stabil, hosszú távú partnert nyer, aki támogatja vállalkozása fejlődését.</p>
+  </section>
 
-    <label for="password">Jelszó:</label>
-    <input type="password" id="password" name="password" required>
+  <section id="vasarlas">
+    <h2>Vásárlás</h2>
+    <p>A vásárlás menete – gyors, biztonságos és átlátható</p>
+    <ol>
+      <li>Regisztráció emailen keresztül, céges adatokkal</li>
+      <li>Dokumentumok beküldése (cégkivonat, aláírási minta, adószám igazolás stb.)</li>
+      <li>Partnerszerződés aláírása</li>
+      <li>Partnerfiók aktiválása</li>
+      <li>Egyedi árképzés, heti árlisták</li>
+    </ol>
+    <p>Ügyfélszolgálatunk készséggel segít a folyamat minden lépésében – keressen bennünket bizalommal!</p>
+  </section>
 
-    <input type="submit" value="Belépés">
-    <div id="login-message" class="message"></div>
-  </form>
-</section>
+  <section id="szallitas">
+    <h2>Szállítás</h2>
+    <p>Megrendeléseit megbízható logisztikai partnercégünk segítségével szállítjuk ki, de lehetőség van a személyes átvételre is telephelyünkön, előre egyeztetett időpontban.</p>
+    <ul>
+      <li>Kiszállítás 2–5 munkanapon belül</li>
+      <li>Saját fuvarozó partner</li>
+      <li>Szállítólevél minden csomag mellé</li>
+      <li>Külön igény esetén CMR és export dokumentáció</li>
+      <li>Személyes átvétel előzetes egyeztetéssel</li>
+    </ul>
+    <p>Tulajdonjog fenntartása: az áru a teljes vételár kiegyenlítéséig cégünk tulajdonát képezi.</p>
+  </section>
 
-  <section id="app">
-    <div id="product-list"></div>
-    <div id="cart"></div>
+  <section id="garancia">
+    <h2>Garancia</h2>
+    <ul>
+      <li>Díjmentes javítás vagy csere</li>
+      <li>Cserekészülék biztosítása szükség esetén</li>
+      <li>Széles szervizhálózat</li>
+      <li>Iparági szabvány szerinti garanciális idő</li>
+    </ul>
+    <p>Probléma esetén kollégáink készséggel állnak rendelkezésére telefonon vagy e-mailben.</p>
+  </section>
+
+  <section id="kapcsolat">
+    <h2>Kapcsolat</h2>
+    <p><strong>Organic Team Kft.</strong><br>
+    Székhely: 1031 Budapest, Rozália utca 11.<br>
+    Adószám: 14938070-2-41 | Cégjegyzékszám: 01-09-965443</p>
+    <p><strong>Telefon:</strong> +36 70 255 7258<br>
+    <strong>Email:</strong><br>
+    Általános ügyintézés: info@organicgsm.hu<br>
+    Szerviz: szerviz@organicgsm.hu<br>
+    Szállítás: szallitas@organicgsm.hu</p>
   </section>
 
   <footer>
