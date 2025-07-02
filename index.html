@@ -101,107 +101,85 @@
     }
   </style>
   <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-      const validEmail = "partner@organicgsm.hu";
-      const validPassword = "titok123";
-      const messageBox = document.getElementById("login-message");
+    const validEmail = "partner@organicgsm.hu";
+    const validPassword = "titok123";
+    const messageBox = document.getElementById("login-message");
 
-      if (email === validEmail && password === validPassword) {
-        messageBox.textContent = "Sikeres belépés! Üdvözöljük.";
-        messageBox.style.color = "green";
-        document.querySelector('nav').style.display = 'none';
-        document.getElementById('belepes').style.display = 'none';
-        document.querySelector('.hero').style.display = 'none';
-        document.getElementById('app').style.display = 'flex';
-        loadProducts();
-      } else {
-        messageBox.textContent = "Hibás email vagy jelszó!";
-        messageBox.style.color = "red";
-      }
+    if (email === validEmail && password === validPassword) {
+      messageBox.textContent = "Sikeres belépés! Üdvözöljük.";
+      messageBox.style.color = "green";
+      document.querySelector('nav').style.display = 'none';
+      document.getElementById('belepes').style.display = 'none';
+      document.querySelector('.hero').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      loadProducts();
+    } else {
+      messageBox.textContent = "Hibás email vagy jelszó!";
+      messageBox.style.color = "red";
     }
+  }
 
-    const products = [
-      { id: 1, name: "iPhone 13", price: 299000 },
-      { id: 2, name: "Samsung Galaxy S22", price: 249000 },
-      { id: 3, name: "Xiaomi Redmi Note 11", price: 79000 },
-    ];
+  const products = [];
+  const cart = [];
 
-    const cart = [];
+  function loadProducts() {
+    const productList = document.getElementById('product-list');
+    productList.innerHTML = '<h2>Terméklista</h2>';
 
-    function loadProducts() {
-  const productList = document.getElementById('product-list');
-  productList.innerHTML = '<h2>Terméklista</h2>';
-
-  fetch("https://api.yukatel.de/api/stock-list?vpnr=22668&authcode=22668-96a841bd-0562-11f0-a7a6-0050568c8f1a&ean=1&type=csv")
-    .then(response => response.text())
-    .then(csv => {
-      const lines = csv.split('
+    fetch("https://api.yukatel.de/api/stock-list?vpnr=22668&authcode=22668-96a841bd-0562-11f0-a7a6-0050568c8f1a&ean=1&type=csv")
+      .then(response => response.text())
+      .then(csv => {
+        const lines = csv.split('
 ').slice(1); // első sor: fejléc
-      lines.forEach((line, index) => {
-        const cols = line.split(';');
-        if (cols.length >= 4) {
-          const name = cols[1]?.trim();
-          const price = parseInt(cols[3]?.replace(/[^0-9]/g, '')) || 0;
-          const id = 1000 + index;
-          const product = { id, name, price };
-          products.push(product);
+        lines.forEach((line, index) => {
+          const cols = line.split(';');
+          if (cols.length >= 4) {
+            const name = cols[1]?.trim();
+            const price = parseInt(cols[3]?.replace(/[^0-9]/g, '')) || 0;
+            const id = 1000 + index;
+            const product = { id, name, price };
+            products.push(product);
 
-          const div = document.createElement('div');
-          div.className = 'product';
-          div.innerHTML = `${product.name} – ${product.price.toLocaleString()} Ft <button onclick="addToCart(${product.id})">Kosárba</button>`;
-          productList.appendChild(div);
-        }
+            const div = document.createElement('div');
+            div.className = 'product';
+            div.innerHTML = `${product.name} – ${product.price.toLocaleString()} Ft <button onclick="addToCart(${product.id})">Kosárba</button>`;
+            productList.appendChild(div);
+          }
+        });
+      })
+      .catch(error => {
+        productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
+        console.error('CSV betöltési hiba:', error);
       });
-    })
-    .catch(error => {
-      productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
-      console.error('CSV betöltési hiba:', error);
+  }
+
+  function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    cart.push(product);
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartDiv = document.getElementById('cart');
+    cartDiv.innerHTML = '<h2>Kosár</h2>';
+    if (cart.length === 0) {
+      cartDiv.innerHTML += '<p>A kosár üres.</p>';
+      return;
+    }
+    const list = document.createElement('ul');
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.name} – ${item.price.toLocaleString()} Ft`;
+      list.appendChild(li);
     });
-};
-          products.push(product);
-
-          const div = document.createElement('div');
-          div.className = 'product';
-          div.innerHTML = `${product.name} – ${product.price.toLocaleString()} Ft <button onclick="addToCart(${product.id})">Kosárba</button>`;
-          productList.appendChild(div);
-        }
-      });
-    })
-    .catch(error => {
-      productList.innerHTML += '<p style="color:red">Hiba a terméklista betöltésekor.</p>';
-      console.error('CSV betöltési hiba:', error);
-    });
-} – ${p.price.toLocaleString()} Ft <button onclick="addToCart(${p.id})">Kosárba</button>`;
-        productList.appendChild(div);
-      });
-    }
-
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      cart.push(product);
-      updateCart();
-    }
-
-    function updateCart() {
-      const cartDiv = document.getElementById('cart');
-      cartDiv.innerHTML = '<h2>Kosár</h2>';
-      if (cart.length === 0) {
-        cartDiv.innerHTML += '<p>A kosár üres.</p>';
-        return;
-      }
-      const list = document.createElement('ul');
-      cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} – ${item.price.toLocaleString()} Ft`;
-        list.appendChild(li);
-      });
-      cartDiv.appendChild(list);
-    }
-  </script>
+    cartDiv.appendChild(list);
+  }
+</script>
 </head>
 <body>
   <header>
