@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Organic GSM – Webshop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background-color: #0f3c73; color: white; padding: 20px; text-align: center; font-size: 24px; }
+        main { display: flex; height: calc(100vh - 100px); }
+        #product-list, #cart-container {
+            width: 50%; padding: 20px; overflow-y: auto;
+        }
+        .product, .cart-item {
+            background: #eef; margin: 10px 0; padding: 10px;
+            border-radius: 8px;
+        }
+        .cart-item { background: #ffe; }
+        button {
+            background-color: #0f3c73;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #finalize-btn {
+            margin-top: 20px;
+            background-color: green;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>Organic GSM – Termékek</header>
+    <main>
+        <div id="product-list">Betöltés...</div>
+        <div id="cart-container">
+            <h3>Kosár</h3>
+            <div id="cart"></div>
+            <button id="finalize-btn" onclick="finalizeOrder()">Rendelés lezárása</button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("ll-ox5ToRtPOnL23O");
+
+        let cart = [];
+        let currentUserEmail = "info@organicgsm.hu";  // statikus vagy dinamikus email itt beállítható
+
+        async function loadCSV() {
+            try {
+                const response = await fetch("TPlista0702.csv");
+                const text = await response.text();
+                const lines = text.trim().split("\n");
+                const products = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const [item, price] = lines[i].split(",");
+                    if (item && price) {
+                        products.push({ item: item.trim(), price: parseFloat(price.trim()) });
+                    }
+                }
+                renderProducts(products);
+            } catch (error) {
+                document.getElementById("product-list").innerText = "Hiba a CSV beolvasásakor.";
+                console.error("CSV betöltési hiba:", error);
+            }
+        }
+
+        function renderProducts(products) {
+            const list = document.getElementById("product-list");
+            list.innerHTML = "";
+            products.forEach((p, index) => {
+                const div = document.createElement("div");
+                div.className = "product";
+                div.innerHTML = `
+                    <strong>${p.item}</strong> – ${p.price.toFixed(2)} Ft
+                    <button onclick="addToCart('${p.item}', ${p.price})">Kosárba</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById("cart");
+            container.innerHTML = "";
+            cart.forEach((entry, index) => {
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerText = `${entry.item} – ${entry.price.toFixed(2)} Ft`;
+                container.appendChild(div);
+            });
+        }
+
+        function finalizeOrder() {
+            if (cart.length === 0) {
+                alert("A kosár üres.");
+                return;
+            }
+            const items = cart.map(p => `${p.item} – ${p.price.toFixed(2)} Ft`).join("\n");
+            const params = {
+                items,
+                user_email: currentUserEmail
+            };
+
+            emailjs.send("service_mq7100r", "template_dkx9ahj", params)
+                .then(() => alert("Rendelés elküldve!"), () => alert("Hiba történt a rendelés küldésekor."));
+        }
+
+        window.onload = () => loadCSV();
+    </script>
+</body>
+</html>
