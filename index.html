@@ -5,15 +5,56 @@
   <title>ORGANIC GSM - Bemutatkozás</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; line-height: 1.6; }
-    h1, h2 { color: #0a3d62; }
-    nav a { margin-right: 10px; text-decoration: none; color: #2980b9; }
-    nav a:hover { text-decoration: underline; }
-    .login-box { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 6px; background: #f9f9f9; }
-    .login-box input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
-    .login-box button { padding: 10px 15px; background: #2980b9; color: white; border: none; cursor: pointer; }
-    .login-box button:hover { background: #1e5f8a; }
-    .error { color: red; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #fff;
+      color: #222;
+    }
+    h1, h2 {
+      color: #0a3d62;
+    }
+    nav a {
+      margin-right: 10px;
+      text-decoration: none;
+      color: #2980b9;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .login-box {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f1f1f1;
+    }
+    .login-box input {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+    .login-box button {
+      padding: 10px 15px;
+      background: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+    .login-box button:hover {
+      background: #1e5f8a;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -22,9 +63,14 @@
 
   <div class="login-box">
     <h3>Partner belépés</h3>
-    <input type="email" id="email" placeholder="Email cím">
-    <input type="password" id="password" placeholder="Jelszó">
+    <label for="email">Email cím:</label>
+    <input type="email" id="email" placeholder="pl. partner@example.com">
+    
+    <label for="password">Jelszó:</label>
+    <input type="password" id="password" placeholder="pl. admin123">
+    
     <button onclick="login()">Belépés</button>
+    
     <p id="error" class="error"></p>
   </div>
 
@@ -36,12 +82,12 @@
     <a href="#kapcsolat">Kapcsolat</a>
   </nav>
 
-  <!-- Tartalom szakaszok (ahogy korábban bemásoltam, kivágva itt) -->
+  <!-- Itt jönnének a szöveges szakaszok: Rólunk, Vásárlás, stb. -->
 
   <script>
     function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
       const error = document.getElementById("error");
 
       if (email === "partner@example.com" && password === "admin123") {
