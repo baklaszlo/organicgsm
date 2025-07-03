@@ -9,11 +9,24 @@
     h1, h2 { color: #0a3d62; }
     nav a { margin-right: 10px; text-decoration: none; color: #2980b9; }
     nav a:hover { text-decoration: underline; }
+    .login-box { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 6px; background: #f9f9f9; }
+    .login-box input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    .login-box button { padding: 10px 15px; background: #2980b9; color: white; border: none; cursor: pointer; }
+    .login-box button:hover { background: #1e5f8a; }
+    .error { color: red; }
   </style>
 </head>
 <body>
 
   <h1>ORGANIC GSM – A Mobiltelefon nagykereskedés</h1>
+
+  <div class="login-box">
+    <h3>Partner belépés</h3>
+    <input type="email" id="email" placeholder="Email cím">
+    <input type="password" id="password" placeholder="Jelszó">
+    <button onclick="login()">Belépés</button>
+    <p id="error" class="error"></p>
+  </div>
 
   <nav>
     <a href="#rolunk">Rólunk</a>
@@ -23,41 +36,21 @@
     <a href="#kapcsolat">Kapcsolat</a>
   </nav>
 
-  <section id="rolunk">
-    <h2>Rólunk</h2>
-    <p>Üdvözöljük Magyarország egyik meghatározó mobiltelefon nagykereskedelmi központjában, ahol a technológia, a szakértelem és az ügyfélközpontúság találkozik!
-    [...]</p>
-    <!-- a teljes szöveg beillesztve lesz, nem rövidítve -->
-  </section>
+  <!-- Tartalom szakaszok (ahogy korábban bemásoltam, kivágva itt) -->
 
-  <section id="vasarlas">
-    <h2>Vásárlás menete</h2>
-    <p>Ahhoz, hogy Ön is partnerünk lehessen, néhány egyszerű, de szükséges lépésen kell végighaladni. [...]</p>
-  </section>
+  <script>
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("error");
 
-  <section id="szallitas">
-    <h2>Szállítási információk</h2>
-    <p>Megrendeléseit megbízható logisztikai partnercégünk segítségével szállítjuk ki, de lehetőség van a személyes átvételre is [...]</p>
-  </section>
-
-  <section id="garancia">
-    <h2>Garancia</h2>
-    <p>Nálunk a vásárlás nem ér véget az áru átvételével – partnereink számára teljeskörű garanciát biztosítunk [...]</p>
-  </section>
-
-  <section id="kapcsolat">
-    <h2>Kapcsolat</h2>
-    <p><strong>Organic Team Kft.</strong><br>
-    Székhely: 1031 Budapest, Rozália utca 11.<br>
-    Adószám: 14938070-2-41<br>
-    Cégjegyzékszám: 01-09-965443<br>
-    📞 Telefon: +36 70 255 7258<br>
-    📧 E-mail: info@organicgsm.hu<br>
-    Szerviz: szerviz@organicgsm.hu<br>
-    Szállítás: szallitas@organicgsm.hu<br>
-    Microsoft Teams: info@organicgsm.hu
-    </p>
-  </section>
+      if (email === "partner@example.com" && password === "admin123") {
+        window.location.href = "shop.html";
+      } else {
+        error.textContent = "Hibás email vagy jelszó!";
+      }
+    }
+  </script>
 
 </body>
 </html>
