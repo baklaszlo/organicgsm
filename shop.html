@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <header>Organic GSM – Termékek</header>
+    <header id="welcomeHeader">Üdvözlünk</header>
     <main>
         <div id="product-list">Betöltés...</div>
         <div id="cart-container">
@@ -115,7 +115,12 @@
                 .then(() => alert("Rendelés elküldve!"), () => alert("Hiba történt a rendelés küldésekor."));
         }
 
-        window.onload = () => loadCSV();
+        window.onload = () => {
+    loadCSV();
+    const email = localStorage.getItem("loggedInEmail") || "Felhasználó";
+    document.getElementById("welcomeHeader").innerText = `Üdvözlünk, ${email}`;
+    currentUserEmail = email;
+};
     </script>
 </body>
 </html>
