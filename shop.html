@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <header>Organic GSM – Termékek</header>
+    <header>Organic GSM – Termékek <button onclick="logout()" style="float:right;">Kilépés</button></header>
     <main>
         <div id="product-list">Betöltés...</div>
         <div id="cart-container">
@@ -116,6 +116,11 @@
         }
 
         window.onload = () => loadCSV();
+
+function logout() {
+    localStorage.removeItem("loggedInEmail");
+    window.location.href = "index.html";
+}
     </script>
 </body>
 </html>
