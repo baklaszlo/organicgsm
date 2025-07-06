@@ -91,7 +91,8 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
   const validCredentials = {
     "teszt@teszt.hu": "teszt",
     "yukonscoutdoo@gmail.com": "12345"
-  };
+  ,
+    "baklaci185@gmail.com": "54321" };
 
   if (validCredentials[email] === password) {
     localStorage.setItem("loggedInEmail", email);
