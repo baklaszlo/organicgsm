@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <header>Organic GSM – Termékek <button style="float:right;" onclick="logout()">Kilépés</button></header>
+    <header>Organic GSM – Termékek</header>
     <main>
         <div id="product-list">Betöltés...</div>
         <div id="cart-container">
@@ -77,21 +77,17 @@
                 const div = document.createElement("div");
                 div.className = "product";
                 div.innerHTML = `
-        <strong>\${p.item}</strong> – \${p.price.toFixed(2)} Ft
-        <input type="number" id="qty-\${index}" value="1" min="1" style="width:50px; margin-left:10px;">
-        <button onclick="addToCart('\${p.item}', \${p.price}, \${index})">Kosárba</button>
-    `;
+                    <strong>${p.item}</strong> – ${p.price.toFixed(2)} Ft
+                    <button onclick="addToCart('${p.item}', ${p.price})">Kosárba</button>
+                `;
                 list.appendChild(div);
             });
         }
 
-        function addToCart(item, price, index) {
-    const qtyInput = document.getElementById(`qty-${index}`);
-    const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-    for (let i = 0; i < quantity; i++) {
-        cart.push({ item, price });
-    }
-    renderCart();
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            renderCart();
+        }
 
         function renderCart() {
             const container = document.getElementById("cart");
@@ -120,11 +116,6 @@
         }
 
         window.onload = () => loadCSV();
-
-function logout() {
-    localStorage.removeItem("loggedInEmail");
-    window.location.href = "index.html";
-}
     </script>
 </body>
 </html>
