@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <title>Organic GSM – Webshop</title>
-    <style>
+<meta charset="utf-8"/>
+<title>Organic GSM – Webshop</title>
+<style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         header { background-color: #0f3c73; color: white; padding: 20px; text-align: center; font-size: 24px; }
         main { display: flex; height: calc(100vh - 100px); }
@@ -51,39 +52,19 @@
     </style>
 </head>
 <body>
-
-<header style="display: flex; align-items: center; justify-content: space-between; background-color: #0f3c73; color: white; padding: 20px;">
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <div style="font-size: 24px;">Organic GSM – Termékek</div>
-        <input
-            type="text"
-            id="search-input"
-            placeholder="Keresés..."
-            oninput="filterProducts()"
-            style="padding: 6px 10px; font-size: 14px; border-radius: 5px; border: none; width: 200px;"
-        >
-    </div>
-    <div>
-        <span id="user-email" style="margin-right: 20px; font-size: 16px;"></span>
-        <button onclick="logout()">Kilépés</button>
-    </div>
-</header>
-
+<header style="display: flex; align-items: center; justify-content: space-between; background-color: #0f3c73; color: white; padding: 20px;"><div style="display: flex; align-items: center; gap: 20px;"><input id="search-input" oninput="filterProducts()" placeholder="Keresés..." style="padding: 6px 10px; font-size: 14px; border-radius: 5px; border: none; width: 200px;"/></div><div style="text-align: center; font-size: 20px;">Organic GSM – Termékek | Megrendelés szám: <span id="order-id"></span></div><div><span id="user-email" style="margin-right: 20px; font-size: 16px;"></span><button onclick="logout()">Kilépés</button></div></header>
 <main>
-    <div id="product-list">Betöltés...</div>
-    <div id="cart-container">
-        <h3>Kosár</h3>
-        <div id="cart"></div>
-
-        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <div id="summary" style="font-weight: bold; font-size: 18px;">Összesen: 0 Ft</div>
-            <div id="item-count" style="font-weight: bold; font-size: 18px;">Darabszám: 0</div>
-        </div>
-
-        <button id="finalize-btn" onclick="finalizeOrder()">Rendelés lezárása</button>
-    </div>
+<div id="product-list">Betöltés...</div>
+<div id="cart-container">
+<h3>Kosár</h3>
+<div id="cart"></div>
+<div style="display: flex; justify-content: space-between; margin-top: 10px;">
+<div id="summary" style="font-weight: bold; font-size: 18px;">Összesen: 0 Ft</div>
+<div id="item-count" style="font-weight: bold; font-size: 18px;">Darabszám: 0</div>
+</div>
+<button id="finalize-btn" onclick="finalizeOrder()">Rendelés lezárása</button>
+</div>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
     emailjs.init("ll-ox5ToRtPOnL23O");
@@ -184,6 +165,7 @@
         const count = cart.length;
     const total = cart.reduce((sum, p) => sum + p.price, 0).toLocaleString('hu-HU');
     const params = {
+        order_id: orderId,
             items,
         count,
         total,
@@ -194,7 +176,12 @@
             .then(() => alert("Rendelés elküldve!"), () => alert("Hiba történt a rendelés küldésekor."));
     }
 
-    window.onload = () => {
+    let orderId = "";
+
+window.onload = () => {
+    orderId = Math.floor(10000 + Math.random() * 90000).toString();
+    document.getElementById("order-id").innerText = orderId;
+
         const email = localStorage.getItem("loggedInEmail");
         if (email) {
             document.getElementById("user-email").innerText = `Bejelentkezve: ${email}`;
